@@ -1,52 +1,93 @@
-
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forró Éj – Aklime</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #191414;
-            color: #ffffff;
-            text-align: center;
-            padding: 40px;
-        }
-        .status {
-            font-size: 1.5em;
-            margin: 20px 0;
-        }
-        .spotify-link {
-            color: #1DB954;
-            text-decoration: none;
-            font-size: 1.2em;
-        }
-        img {
-            margin-top: 20px;
-            border-radius: 10px;
-            width: 300px;
-            height: 300px;
-        }
-        .footer {
-            margin-top: 40px;
-            font-size: 0.8em;
-            color: #bbbbbb;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forró Éj – Aklime</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0;
+    }
+    h2 {
+      font-size: 2em;
+      margin-top: 0;
+      color: #ddd;
+    }
+    .countdown {
+      font-size: 1.5em;
+      color: cyan;
+      margin-top: 10px;
+    }
+    .cover {
+      margin: 30px auto;
+      max-width: 300px;
+      height: auto;
+      display: block;
+      border: 1px solid #444;
+      box-shadow: 0 0 10px #000;
+    }
+    .button {
+      margin-top: 20px;
+    }
+    .button a {
+      background-color: #1DB954;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    .button a:hover {
+      background-color: #1ed760;
+    }
+  </style>
 </head>
 <body>
-    <h1>Forró Éj</h1>
-    <h2>Aklime</h2>
+  <h1>Forró Éj</h1>
+  <h2>Aklime</h2>
+  <p>⏳ A dal még nem jelent meg.</p>
+  <p><strong>Várható megjelenés:</strong> 2025.05.19</p>
+  <div class="countdown" id="countdown">⏱️ Számolás...</div>
+  <img src="forroej_cover.jpg" alt="Forró Éj borító" class="cover"/>
+  <div class="button">
+    <a href="#" id="spotifyBtn" style="display: none;">🎧 Hallgasd meg Spotify-on</a>
+  </div>
 
-    <div class="status">⏳ A dal még nem jelent meg.</div>
-    <p>Várható megjelenés: <strong>2025.05.19</strong></p>
+  <script>
+    const releaseDate = new Date("2025-05-19T00:00:00");
+    const countdownEl = document.getElementById("countdown");
+    const spotifyBtn = document.getElementById("spotifyBtn");
 
-<img src="forroej_cover.jpg" alt="Forró Éj borító" style="max-width: 300px; border: 1px solid #444; margin-top: 20px;" />
+    function updateCountdown() {
+      const now = new Date();
+      const diff = releaseDate - now;
 
-    <div class="footer">
-        Spotify figyelő oldal &mdash; Frissítsd május 19-én vagy később!<br>
-        Ha elérhető, itt fog megjelenni a Spotify link.
-    </div>
+      if (diff <= 0) {
+        countdownEl.textContent = "✅ A dal már elérhető!";
+        spotifyBtn.href = "https://open.spotify.com"; // IDE jön majd az igazi link
+        spotifyBtn.style.display = "inline-block";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownEl.innerHTML = `📅 Megjelenésig hátralévő idő:<br><strong>${days} nap, ${hours} óra, ${minutes} perc, ${seconds} mp</strong>`;
+      setTimeout(updateCountdown, 1000);
+    }
+
+    updateCountdown();
+  </script>
 </body>
 </html>
